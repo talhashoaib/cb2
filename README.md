@@ -1,18 +1,20 @@
-# CB2
+# CB21
 
-[![Gem version](http://img.shields.io/gem/v/cb2.svg)](https://rubygems.org/gems/cb2)
-[![Build Status](https://travis-ci.org/pedro/cb2.svg?branch=master)](https://travis-ci.org/pedro/cb2)
-
-Implementation of the [circuit breaker pattern](http://martinfowler.com/bliki/CircuitBreaker.html) in Ruby, backed by Redis.
+Implementation of the [circuit breaker pattern](http://martinfowler.com/bliki/CircuitBreaker.html) in Ruby, backed by Redis 4.3.0 built on top of CB2 Gem.
 
 Setup circuit breakers wrapping external service calls, be it HTTP, TCP, etc. When a service becomes unavailable the circuit breaker will open and quickly refuse any additional requests to it. After a specific window the breaker closes again, allowing calls to go through.
 
 This pattern makes your application more resilient to third party failures, because it won't exhaust resources trying to make calls to an unresponsive service. This is particularly relevant to apps running on servers susceptible to request queuing, like Unicorn or Puma. It can also help the services you depend on to recover faster, by reducing the load on them.
 
-CB2 tracks errors over a rolling window of time (size configurable), and opens after the error rate hits a certain percentage. The circuit stays open (rejecting calls) for another specified period, and then from there it goes to the half-open state: in which a succesful request will make it close again, but a failure will put it immediatelly back at the open state. [Martin Fowler has a nice diagram to further explain these states](http://martinfowler.com/bliki/CircuitBreaker.html).
+CB21 tracks errors over a rolling window of time (size configurable), and opens after the error rate hits a certain percentage. The circuit stays open (rejecting calls) for another specified period, and then from there it goes to the half-open state: in which a succesful request will make it close again, but a failure will put it immediatelly back at the open state. [Martin Fowler has a nice diagram to further explain these states](http://martinfowler.com/bliki/CircuitBreaker.html).
 
 
 ## Usage
+
+### install
+```
+gem 'cb21'
+```
 
 Instantiate a circuit breaker:
 
